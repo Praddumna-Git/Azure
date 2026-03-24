@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "displayName": "Contoso-Enforce-Tag-Values",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Denies deployment if Owner or CostCenter tags are missing or set to Unassigned.",
+    "metadata": { "category": "Tags" },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          { "field": "tags.Owner", "exists": false },
+          { "field": "tags.CostCenter", "exists": false },
+          { "field": "tags.Owner", "equals": "Unassigned" },
+          { "field": "tags.CostCenter", "equals": "Unassigned" }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}
