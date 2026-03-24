@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "displayName": "Contoso-Require-Base-Tags",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Ensures Owner and CostCenter tags exist. Adds Unassigned if missing.",
+    "metadata": { "category": "Tags" },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          { "field": "tags.Owner", "exists": false },
+          { "field": "tags.CostCenter", "exists": false }
+        ]
+      },
+      "then": {
+        "effect": "modify",
+        "details": {
+          "roleDefinitionIds": [
+            "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "operations": [
+            {
+              "operation": "addOrReplace",
+              "field": "tags.Owner",
+              "value": "Unassigned"
+            },
+            {
+              "operation": "addOrReplace",
+              "field": "tags.CostCenter",
+              "value": "Unassigned"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
