@@ -1,0 +1,30 @@
+{
+  "properties": {
+    "displayName": "Contoso-Allowed-CostCenters",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Restrict allowed CostCenter values.",
+    "metadata": { "category": "Tags" },
+    "parameters": {
+      "allowedCostCenters": {
+        "type": "Array",
+        "defaultValue": [
+          "FIN",
+          "HR",
+          "IT",
+          "MKT",
+          "OPS"
+        ]
+      }
+    },
+    "policyRule": {
+      "if": {
+        "not": {
+          "field": "tags.CostCenter",
+          "in": "[parameters('allowedCostCenters')]"
+        }
+      },
+      "then": { "effect": "deny" }
+    }
+  }
+}
