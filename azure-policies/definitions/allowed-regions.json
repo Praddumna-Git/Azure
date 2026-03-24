@@ -1,0 +1,34 @@
+{
+  "properties": {
+    "displayName": "Contoso-Allowed-Regions",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Deny creation of resources outside approved Contoso regions.",
+    "metadata": {
+      "category": "Location"
+    },
+    "parameters": {
+      "allowedLocations": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Allowed Locations"
+        },
+        "defaultValue": [
+          "uksouth",
+          "ukwest"
+        ]
+      }
+    },
+    "policyRule": {
+      "if": {
+        "not": {
+          "field": "location",
+          "in": "[parameters('allowedLocations')]"
+        }
+      },
+      "then": {
+        "effect": "deny"
+      }
+    }
+  }
+}
